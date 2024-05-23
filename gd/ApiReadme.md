@@ -133,7 +133,7 @@ getConfiguracionNotas(token_acceso).then(response => {
 ```
 ${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/configuracion
 ```
-- **Método HTTP**: GET
+- **Método HTTP**: POST
 
 ### Parametros
 | Nombre | Descripcion | Tipo | Requerido |
@@ -228,7 +228,7 @@ storeConfiguracionNotas(token_acceso).then(response => {
 ```
 ${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/store
 ```
-- **Método HTTP**: GET
+- **Método HTTP**: POST
 
 ### Parametros
 | Nombre | Descripcion | Tipo | Requerido |
