@@ -310,3 +310,64 @@ storeNotasAlumno.then(response => {
   console.error(error)
 })
 ```
+
+## Endpoint para obtener el periodo de sincronización de notas segun el calendario academico
+
+- **URL**:
+```
+${DOMINIO_PROPORCIONADO}/api/v1/lectiva/calendario-acad/sync-notas
+```
+- **Método HTTP**: GET
+
+### Parametros
+| Nombre | Descripcion | Tipo | Requerido |
+| ------ | ------ |------ |------|
+| anio_acad | Anio academico | string(4) | Si |
+| semestre | Semestre academico | string(2) (01, 02) | Si |
+
+### Endpoint protegido
+
+Se debe incluir el encabezado de autorización para que la petición sea exitosa
+
+```json 
+{
+    "Authorization" : "Bearer TOKEN_DE_ACCESO"
+}
+``` 
+### Respuesta exitosa
+
+```json
+{
+    "success": true,
+    "message": "Periodo de sincronización de notas en el calendario académico 2024 - I",
+    "data": {
+        "fecha_inicio": "2024-07-01",
+        "fecha_fin": "2024-07-31"
+    }
+}
+```
+
+### Ejemplo de Petición (JavaScript)
+
+```javascript
+//Acceder al endpoint protegido
+const getPeriodoSincronizacion = async (anio_acad, semestre) => {
+  const url = `${DOMINIO_PROPORCIONADO}/api/v1/lectiva/calendario-acad/sync-notas?anio_acad=${anio_acad}&semestre${semestre}`;
+  
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  });
+
+  const responseData = await response.json();
+  return responseData;
+};
+
+getPeriodoSincronizacion('2024', '01').then(response => {
+  console.log('Respuesta del Endpoint Protegido:', response);
+}).catch(error => {
+  console.error(error)
+})
+```
