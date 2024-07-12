@@ -7,7 +7,7 @@ Para obtener el token de acceso es necesario hace una petición POST al siguient
 
 - **URL**:
 ```
-"${DOMINIO_PROPORCIONADO}/api/token"
+`${DOMINIO_PROPORCIONADO}/api/token`
 ```
 - **Método HTTP**: POST
 
@@ -63,7 +63,7 @@ token_acceso().then(token => {
 
 - **URL**:
 ```
-${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/configuracion
+`${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/configuracion`
 ```
 - **Método HTTP**: GET
 
@@ -131,7 +131,7 @@ getConfiguracionNotas(token_acceso).then(response => {
 
 - **URL**:
 ```
-${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/configuracion
+`${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/configuracion`
 ```
 - **Método HTTP**: POST
 
@@ -226,7 +226,7 @@ storeConfiguracionNotas(token_acceso).then(response => {
 
 - **URL**:
 ```
-${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/store
+`${DOMINIO_PROPORCIONADO}/api/v1/lectiva/notas/store`
 ```
 - **Método HTTP**: POST
 
@@ -315,7 +315,7 @@ storeNotasAlumno.then(response => {
 
 - **URL**:
 ```
-${DOMINIO_PROPORCIONADO}/api/v1/lectiva/calendario-acad/sync-notas
+`${DOMINIO_PROPORCIONADO}/api/v1/lectiva/calendario-acad/sync-notas`
 ```
 - **Método HTTP**: GET
 
@@ -366,6 +366,66 @@ const getPeriodoSincronizacion = async (anio_acad, semestre) => {
 };
 
 getPeriodoSincronizacion('2024', '01').then(response => {
+  console.log('Respuesta del Endpoint Protegido:', response);
+}).catch(error => {
+  console.error(error)
+})
+```
+
+## Endpoint para obtener el docente titular del curso
+
+- **URL**:
+```
+`${DOMINIO_PROPORCIONADO}/api/v1/lectiva/docente-titular`
+```
+- **Método HTTP**: GET
+
+### Parametros
+| Nombre | Descripcion | Tipo | Requerido |
+| ------ | ------ |------ |------|
+| curso_id | ID unico del curso | string(24) | Si |
+
+### Endpoint protegido
+
+Se debe incluir el encabezado de autorización para que la petición sea exitosa
+
+```json 
+{
+    "Authorization" : "Bearer TOKEN_DE_ACCESO"
+}
+``` 
+### Respuesta exitosa
+
+```json
+{
+    "success": true,
+    "message": "Docente titular del curso (CODIGO_CURSO - CURSO GRUPO)",
+    "data": {
+        "cod_profe": "CODIGO_DOCENTE(DNI)",
+        "nombre_completo": "NOMBRE_DEL_DOCENTE"
+    }
+}
+```
+
+### Ejemplo de Petición (JavaScript)
+
+```javascript
+//Acceder al endpoint protegido
+const getPeriodoSincronizacion = async (curso_id) => {
+  const url = `${DOMINIO_PROPORCIONADO}/api/v1/lectiva/docente-titular?curso_id=${curso_id}`;
+  
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  });
+
+  const responseData = await response.json();
+  return responseData;
+};
+
+getDocenteTitular('ID_UNICO_DEL_CURSO').then(response => {
   console.log('Respuesta del Endpoint Protegido:', response);
 }).catch(error => {
   console.error(error)
